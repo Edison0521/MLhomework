@@ -4,7 +4,15 @@ import numpy as np
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
-
+# 以 预测准确率=（预测正确样本数）/（总测试样本数）* 100% 对预测准确率进行计算，设定 ErrorTolerance = 5%
+def accuracy(predict, true):
+    sizeofall = len(true)
+    sizeofright = 0
+    for i in range(0, sizeofall):
+        est = abs(predict[i] - true[i]) / true[i]
+        if est < 0.05:
+            sizeofright = sizeofright + 1
+    return sizeofright / sizeofall
 # 导入数据
 data = pd.read_csv('2.csv',encoding='utf-8')
 used_features = ['收盘价','最高价','最低价','开盘价','前收盘','涨跌额']
@@ -26,15 +34,6 @@ svc = SVC()
 svc.fit(X_train, y_train.astype('int'))
 # 用训练得出的模型进行预测
 diabetes_y_pred = svc.predict(X_test)
-# 以 预测准确率=（预测正确样本数）/（总测试样本数）* 100% 对预测准确率进行计算，设定 ErrorTolerance = 5%
-def accuracy(predict, true):
-    sizeofall = len(true)
-    sizeofright = 0
-    for i in range(0, sizeofall):
-        est = abs(predict[i] - true[i]) / true[i]
-        if est < 0.05:
-            sizeofright = sizeofright + 1
-    return sizeofright / sizeofall
 # 将预测准确率打印出来
 predict = np.array(diabetes_y_pred)
 true = np.array(y_test)
