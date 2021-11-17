@@ -18,13 +18,13 @@ data = pd.read_csv('2.csv',encoding='utf-8')
 used_features = ['收盘价','最高价','最低价','开盘价','前收盘','涨跌额']
 X = data[used_features]
 y = data['涨跌幅']
-k=0
+
 
 # 用交叉验证的方式从数据集中取40%作为测试集，其他作为训练集
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
-    test_size=0.4,
+    test_size=0.3,
     random_state=0,
 )
 
